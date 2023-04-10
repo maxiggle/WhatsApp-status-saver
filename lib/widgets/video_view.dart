@@ -1,34 +1,46 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:status_saver/cubit/status_provider_cubit.dart';
+
+import '../bloc/status_provider_bloc.dart';
 
 class VideoView extends StatelessWidget {
-  const VideoView({Key? key}) : super(key: key);
+  const VideoView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StatusProviderCubit, StatusProviderState>(
-      builder: (context, state) {
-        context.read<StatusProviderCubit>().getStatus('.mp4');
-        final len = context.read<StatusProviderCubit>().getVideos;
+    return BlocProvider(
+      create: (context) => StatusProviderBloc()..add(const GetStatus('.mp4')),
+      child: const _VideoView(),
+    );
+  }
+}
 
+class _VideoView extends StatelessWidget {
+  const _VideoView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<StatusProviderBloc, StatusProviderState>(
+      builder: (context, state) {
+        final len = state.images.length;
         return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
                 childAspectRatio: 3 / 2,
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20),
-            itemCount: len.length,
+            itemCount: len,
             itemBuilder: (BuildContext ctx, index) {
-              final videos =
-                  context.read<StatusProviderCubit>().getImages[index];
+              final videos = state.images[index] as File;
               return Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: Colors.amber,
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: Image.file(videos),
+                child: const Text('data'),
               );
             });
       },
