@@ -1,8 +1,8 @@
-import 'dart:html';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:status_saver/cubit/status_provider_cubit.dart';
+
+import '../bloc/status_provider_bloc.dart';
 
 class ImageView extends StatelessWidget {
   const ImageView({Key? key}) : super(key: key);
@@ -10,7 +10,7 @@ class ImageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => StatusProviderCubit(),
+      create: (context) => StatusProviderBloc()..add(const GetStatus('.jpg')),
       child: const ImageGridView(),
     );
   }
@@ -28,42 +28,28 @@ class ImageGridView extends StatefulWidget {
 class _ImageGridViewState extends State<ImageGridView> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StatusProviderCubit, StatusProviderState>(
+    return BlocBuilder<StatusProviderBloc, StatusProviderState>(
       builder: (context, state) {
-        context.read<StatusProviderCubit>().getStatus('.jpg');
-        final len = context.read<StatusProviderCubit>().getImages;
-
+        final len = state.images.length;
         return GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
                 childAspectRatio: 3 / 2,
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20),
-            itemCount: len.length,
+            itemCount: len,
             itemBuilder: (BuildContext ctx, index) {
-              final images =
-                  context.read<StatusProviderCubit>().getImages[index];
+              final image = state.images[index] as File;
               return Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: Colors.amber,
                   borderRadius: BorderRadius.circular(15),
-                  
                 ),
-                child: FileImage(File(images.path)),
+                child: Image.file(image),
               );
             });
       },
     );
   }
 }
-// List.generate(
-//               context.read<StatusProviderCubit>().getImages.length, (index) {
-           
-//             return GestureDetector(
-//               child: Container(
-//                 color: Colors.green,
-//                 child: Image.file(images),
-//               ),
-//             );
-//           }),
