@@ -1,5 +1,7 @@
 part of 'status_provider_bloc.dart';
 
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+
 @immutable
 class StatusProviderState extends Equatable {
   final dynamic dir;
@@ -7,28 +9,34 @@ class StatusProviderState extends Equatable {
 
   final List<FileSystemEntity> images;
   final List<FileSystemEntity> videos;
+  final bool isLoading;
 
   const StatusProviderState({
     this.dir,
     this.imageVideoList,
     this.images = const [],
     this.videos = const [],
+    this.isLoading = false,
   });
 
   @override
-  List<Object?> get props => [dir, imageVideoList, images, videos];
+  List<Object?> get props => [dir, imageVideoList, images, videos, isLoading];
 
   StatusProviderState copyWith({
     dynamic dir,
     FileSystemEntity? imageVideoList,
     List<FileSystemEntity>? images,
     List<FileSystemEntity>? videos,
+    bool? isLoading,
   }) {
     return StatusProviderState(
       dir: dir ?? this.dir,
       imageVideoList: imageVideoList ?? this.imageVideoList,
       images: images ?? this.images,
       videos: videos ?? this.videos,
+      isLoading: isLoading ?? this.isLoading,
     );
   }
 }
+
+///

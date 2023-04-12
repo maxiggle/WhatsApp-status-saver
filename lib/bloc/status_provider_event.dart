@@ -15,3 +15,4 @@ class GetStatus extends StatusProviderEvent {
   @override
   List<Object> get props => [ext];
 }
+

@@ -27,6 +27,7 @@ class StatusProviderBloc
 
     if (result[Permission.storage] == PermissionStatus.granted &&
         result[Permission.manageExternalStorage] == PermissionStatus.granted) {
+      emit(state.copyWith(isLoading: true));
       final directory = Directory(AppConstant.WHATSAPP_PATH);
       final directoryExists = await directory.exists();
 
@@ -38,7 +39,7 @@ class StatusProviderBloc
           if (data.path.endsWith(event.ext)) {
             final images = state.images.toList();
             images.add(data);
-
+            emit(state.copyWith(isLoading: false));
             return state.copyWith(images: images);
           }
           return state;

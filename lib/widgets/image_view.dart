@@ -31,24 +31,35 @@ class _ImageGridViewState extends State<ImageGridView> {
     return BlocBuilder<StatusProviderBloc, StatusProviderState>(
       builder: (context, state) {
         final len = state.images.length;
-        return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 3 / 2,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20),
-            itemCount: len,
-            itemBuilder: (BuildContext ctx, index) {
-              final image = state.images[index] as File;
-              return Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.amber,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Image.file(image),
-              );
-            });
+        if (state.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  childAspectRatio: 1,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10),
+              itemCount: len,
+              itemBuilder: (BuildContext ctx, index) {
+                final image = state.images[index] as File;
+
+                return Container(
+                  // alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.file(
+                      image,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              });
+        }
       },
     );
   }
