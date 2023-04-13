@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:status_saver/widgets/detailed_image_view.dart';
 
 import '../bloc/status_provider_bloc.dart';
 
@@ -44,17 +45,26 @@ class _ImageGridViewState extends State<ImageGridView> {
               itemBuilder: (BuildContext ctx, index) {
                 final image = state.images[index] as File;
 
-                return Container(
-                  // alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Image.file(
-                      image,
-                      fit: BoxFit.cover,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => DetailedImageView(
+                                  image: image.path,
+                                ))));
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.file(
+                        image,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 );
