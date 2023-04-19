@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:status_saver/widgets/detailed_image_view.dart';
-
 import '../bloc/status_provider_bloc.dart';
 
 class ImageView extends StatelessWidget {
@@ -37,22 +36,27 @@ class _ImageGridViewState extends State<ImageGridView> {
         } else {
           return GridView.builder(
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  childAspectRatio: 1,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10),
+                maxCrossAxisExtent: 200,
+                childAspectRatio: 1,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
               itemCount: len,
               itemBuilder: (BuildContext ctx, index) {
                 final image = state.images[index] as File;
+                final listImages = state.images.map((e) => e as File).toList();
 
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => DetailedImageView(
-                                  image: image.path,
-                                ))));
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => DetailedImageView(
+                              image: image,
+                              allImages: listImages,
+                            )),
+                      ),
+                    );
                   },
                   child: Container(
                     decoration: BoxDecoration(

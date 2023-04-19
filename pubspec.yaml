@@ -16,6 +16,7 @@ dependencies:
   equatable: ^2.0.5
   path_provider: ^2.0.14
   cupertino_icons: ^1.0.2
+  file_manager: ^1.0.2
 
 
 dev_dependencies:
