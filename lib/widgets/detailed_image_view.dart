@@ -64,7 +64,7 @@ class _DetailedImageViewState extends State<DetailedImageView> {
                     onPressed: (() {}),
                     elevation: 0,
                     backgroundColor: const Color(0xff79555B),
-                    heroTag: 'btn1',
+                    heroTag: 'btn1', 
                     child: const Icon(Icons.share, color: Color(0xffE4D0ED)),
                   ),
                   FloatingActionButton(

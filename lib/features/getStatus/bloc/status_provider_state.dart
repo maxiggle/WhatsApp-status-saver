@@ -10,6 +10,7 @@ class StatusProviderState extends Equatable {
   final List<FileSystemEntity> images;
   final List<FileSystemEntity> videos;
   final bool isLoading;
+  final bool isSaved;
 
   const StatusProviderState({
     this.dir,
@@ -17,6 +18,7 @@ class StatusProviderState extends Equatable {
     this.images = const [],
     this.videos = const [],
     this.isLoading = false,
+    this.isSaved = false,
   });
 
   @override
@@ -28,6 +30,7 @@ class StatusProviderState extends Equatable {
     List<FileSystemEntity>? images,
     List<FileSystemEntity>? videos,
     bool? isLoading,
+    bool? isSaved,
   }) {
     return StatusProviderState(
       dir: dir ?? this.dir,
@@ -35,6 +38,7 @@ class StatusProviderState extends Equatable {
       images: images ?? this.images,
       videos: videos ?? this.videos,
       isLoading: isLoading ?? this.isLoading,
+      isSaved: isSaved ?? this.isSaved,
     );
   }
 }

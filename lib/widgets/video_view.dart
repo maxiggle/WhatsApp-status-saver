@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:status_saver/features/getStatus/bloc/status_provider_bloc.dart';
 
-import '../bloc/status_provider_bloc.dart';
+
 
 class VideoView extends StatelessWidget {
   const VideoView({super.key});
