@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 // ignore: depend_on_referenced_packages
@@ -7,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:status_saver/get_file_path.dart';
 
+
 part 'status_provider_event.dart';
 part 'status_provider_state.dart';
 
@@ -14,6 +16,7 @@ class StatusProviderBloc
     extends Bloc<StatusProviderEvent, StatusProviderState> {
   StatusProviderBloc() : super(const StatusProviderState()) {
     on<GetStatus>(_onGetStatus);
+    // on<GetStatus>(_onSaveImage);
   }
 
   Future<void> _onGetStatus(
@@ -27,6 +30,7 @@ class StatusProviderBloc
 
     if (result[Permission.storage] == PermissionStatus.granted &&
         result[Permission.manageExternalStorage] == PermissionStatus.granted) {
+      emit(state.copyWith(isLoading: true));
       final directory = Directory(AppConstant.WHATSAPP_PATH);
       final directoryExists = await directory.exists();
 
@@ -38,7 +42,7 @@ class StatusProviderBloc
           if (data.path.endsWith(event.ext)) {
             final images = state.images.toList();
             images.add(data);
-
+            emit(state.copyWith(isLoading: false));
             return state.copyWith(images: images);
           }
           return state;
@@ -46,4 +50,6 @@ class StatusProviderBloc
       );
     }
   }
+
+ 
 }

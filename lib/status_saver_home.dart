@@ -27,7 +27,7 @@ class StatusSaverHome extends StatelessWidget {
           ),
           body: const TabBarView(
             children: [
-              ImageView(),
+              ImageGridView(),
               VideoView(),
             ],
           ),
