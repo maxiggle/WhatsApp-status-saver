@@ -6,20 +6,10 @@ import 'package:status_saver/features/getStatus/bloc/status_provider_bloc.dart';
 
 
 
+
+
 class VideoView extends StatelessWidget {
-  const VideoView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => StatusProviderBloc()..add(const GetStatus('.mp4')),
-      child: const _VideoView(),
-    );
-  }
-}
-
-class _VideoView extends StatelessWidget {
-  const _VideoView({Key? key}) : super(key: key);
+  const VideoView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
