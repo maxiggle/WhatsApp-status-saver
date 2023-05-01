@@ -1,11 +1,7 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:status_saver/features/getStatus/bloc/status_provider_bloc.dart';
-
-
-
 
 
 class VideoView extends StatelessWidget {
@@ -24,7 +20,7 @@ class VideoView extends StatelessWidget {
                 mainAxisSpacing: 20),
             itemCount: len,
             itemBuilder: (BuildContext ctx, index) {
-              final videos = state.images[index] as File;
+              // final videos = state.images[index] as File;
               return Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
