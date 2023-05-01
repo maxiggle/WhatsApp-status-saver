@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,9 +74,17 @@ class DetailedImageViewState extends State<DetailedImageView> {
                       ),
                       FloatingActionButton(
                         onPressed: (() {
-                          context
-                              .read<SaveImageToDeviceCubit>()
-                              .onSaveImage(widget.image?.path);
+                          if (context
+                                  .read<SaveImageToDeviceCubit>()
+                                  .state
+                                  .isSaved ==
+                              false) {
+                            final image = context
+                                .read<SaveImageToDeviceCubit>()
+                                .onSaveImage(widget.image);
+                          } else {
+                            Text('Image already exists');
+                          }
                         }),
                         elevation: 0,
                         backgroundColor: const Color(0xff79555B),
