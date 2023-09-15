@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:status_saver/features/save_image/cubit/save_image_to_device_cubit.dart';
 import 'package:status_saver/status_saver_home.dart';
 
 import 'features/getStatus/bloc/status_provider_bloc.dart';
@@ -27,9 +26,6 @@ class MyApp extends StatelessWidget {
             ..add(
               const GetStatus('.jpg'),
             ),
-        ),
-        BlocProvider(
-          create: (context) => SaveImageToDeviceCubit(),
         ),
       ],
       child: MaterialApp(

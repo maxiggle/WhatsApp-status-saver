@@ -1,13 +1,15 @@
-import 'dart:developer';
 import 'dart:io';
+// import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:status_saver/features/save_image/cubit/save_image_to_device_cubit.dart';
+import 'package:status_saver/features/getStatus/bloc/status_provider_bloc.dart';
 
 class DetailedImageView extends StatefulWidget {
   final File? image;
   final List<File> allImages;
-  const DetailedImageView({super.key, this.image, required this.allImages});
+
+  const DetailedImageView({Key? key, this.image, required this.allImages})
+      : super(key: key);
 
   @override
   State<DetailedImageView> createState() => DetailedImageViewState();
@@ -16,15 +18,23 @@ class DetailedImageView extends StatefulWidget {
 class DetailedImageViewState extends State<DetailedImageView> {
   late int _currentIndex;
 
+  // ignore: unused_field
+  late BuildContext _context;
+
   @override
   void initState() {
     super.initState();
+    _context = context; // Capture the context
     _currentIndex = widget.allImages.indexOf(widget.image!);
+    if (_currentIndex == -1) {
+      // Handle the case where the image is not found in allImages
+      _currentIndex = 0; // You may choose a different default behavior
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SaveImageToDeviceCubit, SaveImageToDeviceState>(
+    return BlocBuilder<StatusProviderBloc, StatusProviderState>(
       builder: (context, state) {
         return SafeArea(
           child: Scaffold(
@@ -32,8 +42,7 @@ class DetailedImageViewState extends State<DetailedImageView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height *
-                      .5, // set the height of the image container
+                  height: MediaQuery.of(context).size.height * 0.5,
                   child: PageView.builder(
                     itemCount: widget.allImages.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -65,7 +74,9 @@ class DetailedImageViewState extends State<DetailedImageView> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       FloatingActionButton(
-                        onPressed: (() {}),
+                        onPressed: () {
+                          // Implement share functionality
+                        },
                         elevation: 0,
                         backgroundColor: const Color(0xff79555B),
                         heroTag: 'btn1',
@@ -73,19 +84,11 @@ class DetailedImageViewState extends State<DetailedImageView> {
                             const Icon(Icons.share, color: Color(0xffE4D0ED)),
                       ),
                       FloatingActionButton(
-                        onPressed: (() {
-                          if (context
-                                  .read<SaveImageToDeviceCubit>()
-                                  .state
-                                  .isSaved ==
-                              false) {
-                            final image = context
-                                .read<SaveImageToDeviceCubit>()
-                                .onSaveImage(widget.image);
-                          } else {
-                            Text('Image already exists');
-                          }
-                        }),
+                        onPressed: () {
+                          context
+                              .read<StatusProviderBloc>()
+                              .add(SaveStatus(_currentIndex));
+                        },
                         elevation: 0,
                         backgroundColor: const Color(0xff79555B),
                         heroTag: 'btn2',
@@ -93,7 +96,9 @@ class DetailedImageViewState extends State<DetailedImageView> {
                             color: Color(0xffE4D0ED)),
                       ),
                       FloatingActionButton(
-                        onPressed: (() {}),
+                        onPressed: () {
+                          // Implement PDF generation or other functionality
+                        },
                         elevation: 0,
                         backgroundColor: const Color(0xff79555B),
                         heroTag: 'btn3',

@@ -42,5 +42,3 @@ class StatusProviderState extends Equatable {
     );
   }
 }
-
-///
