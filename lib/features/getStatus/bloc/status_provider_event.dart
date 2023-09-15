@@ -16,3 +16,9 @@ class GetStatus extends StatusProviderEvent {
   List<Object> get props => [ext];
 }
 
+class SaveStatus extends StatusProviderEvent {
+  const SaveStatus(this.currIdx);
+  final int currIdx;
+  @override
+  List<Object> get props => [];
+}
