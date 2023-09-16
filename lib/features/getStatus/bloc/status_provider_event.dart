@@ -7,11 +7,18 @@ abstract class StatusProviderEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetStatus extends StatusProviderEvent {
-  const GetStatus(this.ext);
+class GetImageStatus extends StatusProviderEvent {
+  const GetImageStatus(this.ext);
 
   final String ext;
 
+  @override
+  List<Object> get props => [ext];
+}
+
+class GetVideoStatus extends StatusProviderEvent {
+  final String ext;
+  const GetVideoStatus(this.ext);
   @override
   List<Object> get props => [ext];
 }
