@@ -15,6 +15,13 @@ class ImageGridView extends StatefulWidget {
 
 class _ImageGridViewState extends State<ImageGridView> {
   @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<StatusProviderBloc>(context)
+        .add(const GetImageStatus('.jpg'));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<StatusProviderBloc, StatusProviderState>(
       builder: (context, state) {

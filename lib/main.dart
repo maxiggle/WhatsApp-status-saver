@@ -15,18 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => StatusProviderBloc()
-            ..add(
-              const GetStatus('.mp4'),
-            ),
-        ),
-        BlocProvider(
-          create: (context) => StatusProviderBloc()
-            ..add(
-              const GetStatus('.jpg'),
-            ),
-        ),
+        BlocProvider(create: (context) => StatusProviderBloc()),
       ],
       child: MaterialApp(
           title: 'Flutter Demo',
